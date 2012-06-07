@@ -1,0 +1,127 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 def our_project():\
+	y=[5,10,15,20,25]\
+	visualize(y)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 	step = 0\
+	numStep = 5\
+	while step < numStep:	\
+   		v=[]\
+		for s in y:\
+			v.append(s+10)\
+		y=v\
+		visualize(y)\
+		step += 1\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 	\
+\
+def cars_move_seperately():\
+	1. cars have velocity that changes y of cars independent of each other\
+	2. find number of spots in front of car by reading y\
+	3. If velocity is greater then number of spots, increase velocity\
+	4. if velocity is less then number of spots, decrease velocity\
+	5. Move cars forward by their velocity\
+	\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+import pylab as pylab\
+import numpy as np\
+import matplotlib as mat\
+import matplotlib.pyplot as plt	\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+\
+def visualize(y):\
+	x=[1,2,3,4,5]\
+	numcar = x  # number of cars\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 	position = y  # position as an integer\
+	if len(numcar) == 1:\
+		fig = plt.figure()\
+		ax1 = fig.add_subplot(111)\
+		t = np.arange(0.01,100,1)\
+		car1 = (position[0])\
+		ax1.plot(car1,1,'bo')\
+		ax1.set_xlabel('distance')\
+		pylab.grid(True)\
+		pylab.xlim([0.01,100])\
+		pylab.show()\
+	elif len(numcar) == 2:\
+		fig = plt.figure()\
+		ax1 = fig.add_subplot(111)\
+ 		t = np.arange(0.01,100,1)\
+		car1 = (position[0])\
+		ax1.plot(car1,1,'bo')\
+		ax1.set_xlabel('distance')\
+		ax2 = fig.add_subplot(111)\
+		car2 = (position[1])\
+		ax2.plot(car2,1,'ro')\
+		pylab.grid(True)\
+		pylab.xlim([0.01,100])\
+		pylab.show()\
+	elif len(numcar) == 3:\
+		fig = plt.figure()\
+		ax1 = fig.add_subplot(111)\
+		t = np.arange(0.01,100,1)\
+		car1 = (position[0])\
+		ax1.plot(car1,1,'bo')\
+		ax1.set_xlabel('distance')\
+		ax2 = fig.add_subplot(111)\
+		car2 = (position[1])\
+		ax2.plot(car2,1,'ro')\
+		ax3 = fig.add_subplot(111)\
+		car3 = (position[2])\
+		ax3.plot(car3,1,'go')\
+		pylab.grid(True)\
+		pylab.xlim([0.01,100])\
+		pylab.show()\
+	elif len(numcar) == 4:\
+		fig = plt.figure()\
+		ax1 = fig.add_subplot(111)\
+		t = np.arange(0.01,100,1)\
+		car1 = (position[0])\
+		ax1.plot(car1,1,'bo')\
+		ax1.set_xlabel('distance')\
+		ax2 = fig.add_subplot(111)\
+		car2 = (position[1])\
+		ax2.plot(car2,1,'ro')\
+		ax3 = fig.add_subplot(111)\
+		car3 = (position[2])\
+		ax3.plot(car3,1,'go')\
+		ax4 = fig.add_subplot(111)\
+		car4 = (position[3])\
+		ax4.plot(car4,1,'mo')\
+		pylab.grid(True)\
+		pylab.xlim([0.01,100])\
+		pylab.show()\
+	elif len(numcar) == 5:\
+		fig = plt.figure()\
+		ax1 = fig.add_subplot(111)\
+		t = np.arange(0.01,100,1)\
+		car1 = (position[0])\
+		ax1.plot(car1,1,'bo')\
+		ax1.set_xlabel('distance')\
+		ax2 = fig.add_subplot(111)\
+		car2 = (position[1])\
+		ax2.plot(car2,1,'ro')\
+		ax3 = fig.add_subplot(111)\
+		car3 = (position[2])\
+		ax3.plot(car3,1,'go')\
+		ax4 = fig.add_subplot(111)\
+		car4 = (position[3])\
+		ax4.plot(car4,1,'mo')\
+		ax5 = fig.add_subplot(111)\
+		car5 = (position[4])\
+		ax5.plot(car5,1,'yo')\
+		pylab.grid(True)\
+		pylab.xlim([0.01,100])\
+		pylab.show()\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+\
+}

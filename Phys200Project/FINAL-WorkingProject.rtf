@@ -1,0 +1,889 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 import random\
+class Car(object):\
+	"""does car things"""\
+	#initializes the car\
+	def __init__(self,pos=0, vmax = 0, p=0, cruise_control=False):\
+		self.pos = pos\
+		self.vmax = vmax\
+		self.v = random.randint(1, self.vmax)\
+		self.p = p\
+		self.cruise_control = cruise_control\
+	#checks how many spaces are in front    \
+	def check_front(self,array=[],pos=None):\
+		if pos is None:\
+			pos = self.pos\
+		arr = array\
+		i=1\
+		while pos+i <= len(arr):\
+			#checks if the car leaves the array\
+			if pos+i >= len(arr):\
+				if arr[0] == 0:\
+					return i + self.check_front(arr,0)\
+				else:\
+					return i-1\
+			#+1 to empty space count\
+			elif arr[pos+i] == 0:\
+				i = i+1\
+			#returns number of empty spaces ahead of it\
+			else:\
+				return i-1\
+	#makes v\
+	def check_velocity(self,array=[]):\
+		arr = array\
+		#sets v = to check_front\
+		if self.v >= self.vmax:\
+			self.v = self.vmax\
+		else:\
+			self.v = self.v+1\
+		if self.v > self.check_front(arr):\
+			self.v=self.check_front(arr)\
+		if self.p > random.random() and self.v != self.vmax and self.cruise_control==True:\
+			self.v = self.v - 1\
+			return self.v\
+		else:\
+			return self.v\
+	#returns the new position\
+	def move_car(self,array=[]):\
+		arr = array\
+		x = self.pos + self.check_velocity(arr)\
+		#checks if the new position is greater than the length of the array and loops the car through\
+		if x >= len(arr):\
+			return x - len(arr)\
+		else:\
+			return x\
+\
+import pylab as pylab\
+import numpy as np\
+import matplotlib as mat\
+import matplotlib.pyplot as plt\
+# So Tristan is going to give me an array and for now I'm going to assume\
+# that it looks like this: [name position] and that each column is a number\
+# of cars long.\
+def visualize(x,y):\
+    \
+    numcar = x[:]  # number of cars\
+    position = y[:]  # position as an integer\
+    if len(numcar) == 1:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 2:\
+    	fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 3:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 4:\
+   	fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 5:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 6:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 7:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 8:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 9:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 10:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 11:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        ax11 = fig.add_subplot(111)\
+        car11 = (position[10])\
+        ax11.plot(car11,1,'m*')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 12:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        ax11 = fig.add_subplot(111)\
+        car11 = (position[10])\
+        ax11.plot(car11,1,'m*')\
+        ax12 = fig.add_subplot(111)\
+        car12 = (position[11])\
+        ax12.plot(car12,1,'y*')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 13:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        ax11 = fig.add_subplot(111)\
+        car11 = (position[10])\
+        ax11.plot(car11,1,'m*')\
+        ax12 = fig.add_subplot(111)\
+        car12 = (position[11])\
+        ax12.plot(car12,1,'y*')\
+        ax13 = fig.add_subplot(111)\
+        car13 = (position[12])\
+        ax13.plot(car13,1,'c*')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 14:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        ax11 = fig.add_subplot(111)\
+        car11 = (position[10])\
+        ax11.plot(car11,1,'m*')\
+        ax12 = fig.add_subplot(111)\
+        car12 = (position[11])\
+        ax12.plot(car12,1,'y*')\
+        ax13 = fig.add_subplot(111)\
+        car13 = (position[12])\
+        ax13.plot(car13,1,'c*')\
+        ax14 = fig.add_subplot(111)\
+        car14 = (position[13])\
+        ax14.plot(car14,1,'k*')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 15:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        ax11 = fig.add_subplot(111)\
+        car11 = (position[10])\
+        ax11.plot(car11,1,'m*')\
+        ax12 = fig.add_subplot(111)\
+        car12 = (position[11])\
+        ax12.plot(car12,1,'y*')\
+        ax13 = fig.add_subplot(111)\
+        car13 = (position[12])\
+        ax13.plot(car13,1,'c*')\
+        ax14 = fig.add_subplot(111)\
+        car14 = (position[13])\
+        ax14.plot(car14,1,'k*')\
+        ax15 = fig.add_subplot(111)\
+        car15 = (position[14])\
+        ax15.plot(car15,1,'b+')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 16:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        ax11 = fig.add_subplot(111)\
+        car11 = (position[10])\
+        ax11.plot(car11,1,'m*')\
+        ax12 = fig.add_subplot(111)\
+        car12 = (position[11])\
+        ax12.plot(car12,1,'y*')\
+        ax13 = fig.add_subplot(111)\
+        car13 = (position[12])\
+        ax13.plot(car13,1,'c*')\
+        ax14 = fig.add_subplot(111)\
+        car14 = (position[13])\
+        ax14.plot(car14,1,'k*')\
+        ax15 = fig.add_subplot(111)\
+        car15 = (position[14])\
+        ax15.plot(car15,1,'b+')\
+        ax16 = fig.add_subplot(111)\
+        car16 = (position[15])\
+        ax16.plot(car16,1,'r+')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 17:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        ax11 = fig.add_subplot(111)\
+        car11 = (position[10])\
+        ax11.plot(car11,1,'m*')\
+        ax12 = fig.add_subplot(111)\
+        car12 = (position[11])\
+        ax12.plot(car12,1,'y*')\
+        ax13 = fig.add_subplot(111)\
+        car13 = (position[12])\
+        ax13.plot(car13,1,'c*')\
+        ax14 = fig.add_subplot(111)\
+        car14 = (position[13])\
+        ax14.plot(car14,1,'k*')\
+        ax15 = fig.add_subplot(111)\
+        car15 = (position[14])\
+        ax15.plot(car15,1,'b+')\
+        ax16 = fig.add_subplot(111)\
+        car16 = (position[15])\
+        ax16.plot(car16,1,'r+')\
+        ax17 = fig.add_subplot(111)\
+        car17 = (position[16])\
+        ax17.plot(car17,1,'g+')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 18:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        ax11 = fig.add_subplot(111)\
+        car11 = (position[10])\
+        ax11.plot(car11,1,'m*')\
+        ax12 = fig.add_subplot(111)\
+        car12 = (position[11])\
+        ax12.plot(car12,1,'y*')\
+        ax13 = fig.add_subplot(111)\
+        car13 = (position[12])\
+        ax13.plot(car13,1,'c*')\
+        ax14 = fig.add_subplot(111)\
+        car14 = (position[13])\
+        ax14.plot(car14,1,'k*')\
+        ax15 = fig.add_subplot(111)\
+        car15 = (position[14])\
+        ax15.plot(car15,1,'b+')\
+        ax16 = fig.add_subplot(111)\
+        car16 = (position[15])\
+        ax16.plot(car16,1,'r+')\
+        ax17 = fig.add_subplot(111)\
+        car17 = (position[16])\
+        ax17.plot(car17,1,'g+')\
+        ax18 = fig.add_subplot(111)\
+        car18 = (position[17])\
+        ax18.plot(car18,1,'m+')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 19:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        ax11 = fig.add_subplot(111)\
+        car11 = (position[10])\
+        ax11.plot(car11,1,'m*')\
+        ax12 = fig.add_subplot(111)\
+        car12 = (position[11])\
+        ax12.plot(car12,1,'y*')\
+        ax13 = fig.add_subplot(111)\
+        car13 = (position[12])\
+        ax13.plot(car13,1,'c*')\
+        ax14 = fig.add_subplot(111)\
+        car14 = (position[13])\
+        ax14.plot(car14,1,'k*')\
+        ax15 = fig.add_subplot(111)\
+        car15 = (position[14])\
+        ax15.plot(car15,1,'b+')\
+        ax16 = fig.add_subplot(111)\
+        car16 = (position[15])\
+        ax16.plot(car16,1,'r+')\
+        ax17 = fig.add_subplot(111)\
+        car17 = (position[16])\
+        ax17.plot(car17,1,'g+')\
+        ax18 = fig.add_subplot(111)\
+        car18 = (position[17])\
+        ax18.plot(car18,1,'m+')\
+        ax19 = fig.add_subplot(111)\
+        car19 = (position[18])\
+        ax19.plot(car19,1,'y+')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+    elif len(numcar) == 20:\
+        fig = plt.figure()\
+        ax1 = fig.add_subplot(111)\
+        t = np.arange(0.01,100,1)\
+        car1 = (position[0])\
+        ax1.plot(car1,1,'bo')\
+        ax1.set_xlabel('distance')\
+        ax2 = fig.add_subplot(111)\
+        car2 = (position[1])\
+        ax2.plot(car2,1,'ro')\
+        ax3 = fig.add_subplot(111)\
+        car3 = (position[2])\
+        ax3.plot(car3,1,'go')\
+        ax4 = fig.add_subplot(111)\
+        car4 = (position[3])\
+        ax4.plot(car4,1,'mo')\
+        ax5 = fig.add_subplot(111)\
+        car5 = (position[4])\
+        ax5.plot(car5,1,'yo')\
+        ax6 = fig.add_subplot(111)\
+        car6 = (position[5])\
+        ax6.plot(car6,1,'co')\
+        ax7 = fig.add_subplot(111)\
+        car7 = (position[6])\
+        ax7.plot(car7,1,'ko')\
+        ax8 = fig.add_subplot(111)\
+        car8 = (position[7])\
+        ax8.plot(car8,1,'b*')\
+        ax9 = fig.add_subplot(111)\
+        car9 = (position[8])\
+        ax9.plot(car9,1,'r*')\
+        ax10 = fig.add_subplot(111)\
+        car10 = (position[9])\
+        ax10.plot(car10,1,'g*')\
+        ax11 = fig.add_subplot(111)\
+        car11 = (position[10])\
+        ax11.plot(car11,1,'m*')\
+        ax12 = fig.add_subplot(111)\
+        car12 = (position[11])\
+        ax12.plot(car12,1,'y*')\
+        ax13 = fig.add_subplot(111)\
+        car13 = (position[12])\
+        ax13.plot(car13,1,'c*')\
+        ax14 = fig.add_subplot(111)\
+        car14 = (position[13])\
+        ax14.plot(car14,1,'k*')\
+        ax15 = fig.add_subplot(111)\
+        car15 = (position[14])\
+        ax15.plot(car15,1,'b+')\
+        ax16 = fig.add_subplot(111)\
+        car16 = (position[15])\
+        ax16.plot(car16,1,'r+')\
+        ax17 = fig.add_subplot(111)\
+        car17 = (position[16])\
+        ax17.plot(car17,1,'g+')\
+        ax18 = fig.add_subplot(111)\
+        car18 = (position[17])\
+        ax18.plot(car18,1,'m+')\
+        ax19 = fig.add_subplot(111)\
+        car19 = (position[18])\
+        ax19.plot(car19,1,'y+')\
+        ax20 = fig.add_subplot(111)\
+        car20 = (position[19])\
+        ax20.plot(car20,1,'c+')\
+        pylab.grid(True)\
+        pylab.xlim([0.01,100])\
+        pylab.show()\
+\
+def Porj(NumberCar, NumberStep):\
+    numStep = NumberStep #number of steps, change to user input\
+    numCar = NumberCar\
+    density = []\
+    lenRoad = 100 #number of spaces on road\
+    curRoad = [] #the current road, a list of car objects\
+    c = 0\
+    n = 0\
+    import copy\
+    q = 0\
+    initalPos = []\
+    while q < numCar:\
+        rad = random.randint(0, lenRoad)\
+        if rad not in initalPos:\
+            initalPos.append(rad)\
+            q += 1\
+    for iPos in initalPos:\
+        curRoad.append(Car(iPos, 5))\
+    while n < numStep: #This will visualize the current road and make a new one\
+        newRoad = [] #road to be made, will replaces curRoad\
+        posLis = []\
+        namLis = []\
+        index = 1\
+        firstPos = 101\
+        lastPos = -1\
+        for b in curRoad: #makes list for visualization\
+            posLis.append(b.pos)\
+            if(b.pos < firstPos):\
+                firstPos = b.pos\
+            if(b.pos > lastPos):\
+                lastPos = b.pos\
+            namLis.append(index)\
+            index += 1\
+        density.append( float(numCar)/float(lastPos + 1. - firstPos) ) #density of step\
+        visualize(namLis, posLis) #Visualizes current road\
+        street = [0]*(lenRoad+1)\
+        for a in curRoad:\
+            street[a.pos] = 1\
+        for car in curRoad:\
+            newCar = copy.copy(car)\
+            newCar.pos = car.move_car(street)\
+            newRoad.append(newCar) #adds the new car to the new road\
+        curRoad = newRoad\
+        #time.sleep(1)\
+        n +=1\
+    \
+    return density}
